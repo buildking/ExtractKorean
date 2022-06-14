@@ -26,9 +26,15 @@ def fileRead(path):
     f2.write(f'{path}\n')
     nia.write(f'{path}\n')
     # fResult.write(f'{path}\n')
-    lines = f.readlines()
-    hangul = re.compile('[ㄱ-ㅣ가-힣]')
-    notHangul = re.compile('[^ ㄱ-ㅣ가-힣|()+]')
+    try:
+        lines = f.readlines()
+    except:
+        lines = ['error']
+        print('!!에러 발생!!')
+        collectError = open(colE_dir, 'a')
+        collectError.write(f'{path}\n')
+        collectError.close()
+
     lineNo = 0
     for line in lines:
         lineNo = lineNo + 1
@@ -61,8 +67,11 @@ def fileRead(path):
 
 if __name__ == "__main__":
     #root_dir = 'E:\\webproject-site\\NetisWeb_last\\netis\\src\\main\\webapp\WEB-INF'
-    root_dir = 'D:\\hamon\\trunk\\netis\\src\\main\\webapp' #불러올 파일 경로
+    root_dir = 'D:\\hamon\\trunk\\netis\\src\\main\\java\\com\\hm\\netis\\webapp\\main\\widget' #불러올 파일 경로
     csv_dir = 'C:/BACK/FilePile/korean.csv' #저장할 파일 경로
     nia_dir = 'C:/BACK/FilePile/nia.csv' #저장할 파일 경로
+    colE_dir = 'C:/BACK/FilePile/error.csv'
     # result_dir = 'C:/BACK/FilePile/result.csv'
+    hangul = re.compile('[ㄱ-ㅣ가-힣]')
+    notHangul = re.compile('[^ ㄱ-ㅣ가-힣|()+]')
     print_files_in_dir(root_dir, "")

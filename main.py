@@ -2,8 +2,9 @@ import os
 import re
 
 totalFileCnt = 0
-f2 = open('C:/BACK/FilePile/korean.csv', 'w')
-nia = open('C:/BACK/FilePile/fileList.csv', 'w')
+##파일 열기(<->닫기)
+f2 = open('C:/BACK/FilePile/result.csv', 'w')
+# nia = open('C:/BACK/FilePile/fileList.csv', 'w')
 
 def print_files_in_dir(root_dir, prefix):
     files = os.listdir(root_dir)
@@ -25,8 +26,9 @@ def fileRead(path):
     print(path)
     f = open(path, 'r', encoding="UTF-8")
     # fResult = open(result_dir, 'a')
-    f2.write(f'{path}\n')
-    nia.write(f'{path}\n')
+    ##파일명 입력
+    # f2.write(f'{path}\n')
+    # nia.write(f'{path}\n')
     # fResult.write(f'{path}\n')
     try:
         lines = f.readlines()
@@ -62,9 +64,10 @@ def fileRead(path):
                 # print(f'NIA {lineNo}: {lineStr} -> {result2} ')
                 # nia.write(f'{lineNo},{lineStr},{result2}\n')
 
-
+            ##결과 입력
             print(f'{lineNo}: {lineStr} -> {result2} ')
-            f2.write(f'{lineNo},{lineStr},{result2}\n')
+            f2.write(f'{result2}, {lineStr}, {path}, {lineNo}\n')
+            # f2.write(f'{lineNo},{lineStr},{result2}\n')
             # fResult.write(f'{lineNo}, {result2}\n')
             #todo 파일에 쓰기
     f.close()
@@ -76,8 +79,9 @@ if __name__ == "__main__":
     colE_dir = 'C:/BACK/FilePile/error.csv'
     # result_dir = 'C:/BACK/FilePile/result.csv'
     hangul = re.compile('[ㄱ-ㅣ가-힣]')
-    notHangul = re.compile('[^ ㄱ-ㅣ가-힣|()+]')
+    notHangul = re.compile('[^ ㄱ-ㅣ가-힣 +]')
     print_files_in_dir(root_dir, "")
 
+    ##파일 닫기(<->열기)
     f2.close()
-    nia.close()
+    # nia.close()

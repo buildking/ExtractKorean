@@ -3,7 +3,7 @@ import re
 
 totalFileCnt = 0
 ##파일 열기(<->닫기)
-f2 = open('C:/BACK/FilePile/result.csv', 'w')
+f2 = open('C:/BACK/FilePile/resultGo.csv', 'w')
 # nia = open('C:/BACK/FilePile/fileList.csv', 'w')
 
 def print_files_in_dir(root_dir, prefix):
@@ -46,6 +46,7 @@ def fileRead(path):
         if afterStr.startswith('*'):continue
         if afterStr.startswith('//'):continue
         if afterStr.startswith('<!--'):continue
+        if afterStr.startswith('<%--'):continue
         if afterStr.startswith('/*'):continue
         if afterStr.startswith('/**'):continue
 
@@ -59,14 +60,15 @@ def fileRead(path):
         result = hangul.search(coreLine)
         if result is not None:
             result2 = notHangul.sub('', coreLine).lstrip().rstrip()
-            lineStr = afterStr.replace(',',' ').replace('•',' ').replace('₩','$')
+            lineStr = afterStr.replace(',','^').replace('•','@').replace('₩','$')
+            pureKorean = result2.replace(' ','').replace('+','')
 
                 # print(f'NIA {lineNo}: {lineStr} -> {result2} ')
                 # nia.write(f'{lineNo},{lineStr},{result2}\n')
 
             ##결과 입력
             print(f'{lineNo}: {lineStr} -> {result2} ')
-            f2.write(f'{result2}, {lineStr}, {path}, {lineNo}\n')
+            f2.write(f'{result2}, {lineStr}, {path}, {lineNo}, {pureKorean}\n')
             # f2.write(f'{lineNo},{lineStr},{result2}\n')
             # fResult.write(f'{lineNo}, {result2}\n')
             #todo 파일에 쓰기
